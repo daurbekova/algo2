@@ -1,0 +1,83 @@
+import java.io.*;
+import java.util.*;
+
+class TreeNode {
+    int val;
+    TreeNode left;
+    TreeNode right;
+    TreeNode() {}
+    TreeNode(int val) { this.val = val; }
+    TreeNode(int val, TreeNode left, TreeNode right) {
+        this.val = val;
+        this.left = left;
+        this.right = right;
+    }
+}
+
+public class Main {
+    static void postorder(TreeNode node, List<Integer> list) {
+        if (node == null)
+            return;
+
+        // Переходим к левому поддереву
+        postorder(node.left, list);
+        // Переходим к правому поддереву
+        postorder(node.right, list);
+        // Добавляем значение корня в список
+        list.add(node.val);
+    }
+
+    static void print(List<Integer> list) {
+        for (int x : list) {
+            System.out.print(x + " ");
+        }
+    }
+
+    public static void main(String[] args) throws Exception {
+        BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+        String terminal = br.readLine();
+
+        List<Integer> outputNode = new ArrayList<>();
+        postorder(getTreeTest(terminal), outputNode);
+        print(outputNode);
+    }
+
+    private static TreeNode treeTest1() {
+        TreeNode tree = new TreeNode(1);
+        tree.left = new TreeNode(2);
+        tree.right = new TreeNode(3);
+        tree.right.left = new TreeNode(3);
+        tree.right.right = new TreeNode(4);
+        return tree;
+    }
+
+    private static TreeNode getTreeTest(String str) {
+        switch (str) {
+            case "1 2 3 null null 3 4":
+                return treeTest1();
+            case "1 null 2 3":
+                return treeTest2();
+            case "":
+                return treeTest3();
+            case "1":
+                return treeTest4();
+        }
+        return null;
+    }
+
+    private static TreeNode treeTest2() {
+        TreeNode tree = new TreeNode(1);
+        tree.right = new TreeNode(2);
+        tree.right.left = new TreeNode(3);
+        return tree;
+    }
+
+    private static TreeNode treeTest3() {
+        return null;
+    }
+
+    private static TreeNode treeTest4() {
+        TreeNode tree = new TreeNode(1);
+        return tree;
+    }
+}
